@@ -37,8 +37,6 @@ optional arguments:
 
 ## Installation
 
-Install using distutils:
-
 ``` bash
 $ pip install git+https://github.com/arel/pkls.git
 ```
