@@ -4,14 +4,14 @@
 A super simple python module for listing contents of a `pickle` file on the command line.
 
 ## Example
-Assuming you have a file named `test.pk`, you can list its contents like this:
+Assuming you have a file named `example.pickle`, you can list its contents like this:
 ``` bash
-$ pkls test.pk
+$ pkls example.pickle
 ```
-which pretty-prints the contents of `test.pk`. For example,
+which pretty-prints the contents of `example.pickle`. For example,
 ``` bash
-$ pkls test.pk
-test.pk
+$ pkls example.pickle
+example.pickle
 {   'X': array([[58, 99, 45, ..., 82, 90, 17],
        [76, 28, 14, ..., 31, 19, 70],
        [ 7, 37, 21, ..., 78, 88, 87]]),
