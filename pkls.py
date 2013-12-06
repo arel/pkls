@@ -71,7 +71,7 @@ def safe_load(fileobject):
             module = importlib.import_module(module_name)
             return getattr(module, class_name)
         except:
-            print >> sys.stderr, "stubbing", module_name, class_name
+            print >> sys.stderr, "stubbing %s.%s" % (module_name, class_name)
             return make_stub(module_name, class_name)
 
     unpickler = cPickle.Unpickler(fileobject)

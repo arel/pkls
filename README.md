@@ -1,7 +1,9 @@
 # pkls
 *"ls" for pickle files.*
 
-A super simple python module for listing contents of a `pickle` file on the command line.
+A super simple python module for listing contents of a `pickle` file from the command line.
+Unlike your normal `pickle.load()` function, `pkls` gracefully displays classes
+even if they are not in your current environment.
 
 ## Example
 Assuming you have a file named `example.pickle`, you can list its contents like this:
@@ -11,13 +13,14 @@ $ pkls example.pickle
 which pretty-prints the contents of `example.pickle`. For example,
 ``` bash
 $ pkls example.pickle
+stubbing missing_module.ArelClass
 example.pickle
-{   'X': array([[58, 99, 45, ..., 82, 90, 17],
-       [76, 28, 14, ..., 31, 19, 70],
-       [ 7, 37, 21, ..., 78, 88, 87]]),
-    'name': 'my data',
-    'result': 0.957,
-    'y': array([0, 1, 1, ..., 0, 0, 1])}
+[   1,
+    2,
+    'Salem',
+    {   3: 'Sprague'},
+    OrderedDict([(541, 'Oregon')]),
+    missing_module.ArelClass : {   'a': 'Camerata', 'b': 123}]
 ```
 
 ## Usage
@@ -40,7 +43,3 @@ optional arguments:
 ``` bash
 $ pip install git+https://github.com/arel/pkls.git
 ```
-
-## Caveats
-
-Classes and modules referenced by the pickle file must be present in your current environment.
