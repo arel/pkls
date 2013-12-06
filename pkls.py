@@ -13,25 +13,40 @@ parser.add_argument('files', metavar='FILE', type=unicode, nargs='+',
 
 
 def make_stub(module_name, class_name):
+    """
+    Return a dummy class, given a module name and class name.
+    Its representation is the (pretty-printed) pickled state of the object.
+
+    :param str module_name:
+        The module name to display this class as.
+
+    :param str class_name:
+        The class name to display this class as.
+
+    :returns:
+        A "stub" class with the given names.
+    """
 
     class StubObject(object):
 
         def __init__(self, *args, **kwargs):
-            self.args = args
-            self.kwargs = kwargs
+            self.state = None
 
         def __repr__(self):
+
             cls_str = "%s.%s" % (module_name, class_name)
 
-            if hasattr(self, 'args'):
-                arg_str = ", ".join(self.args)
-                cls_str += " (%s)" % arg_str
-
-            if hasattr(self, 'kwargs'):
-                kwarg_str = ", ".join("%s=%s" % (k,v) for k,v in self.kwargs.iteritems())
-                cls_str += " (%s)" % kwarg_str
+            if getattr(self, 'state', None):
+                pp = pprint.PrettyPrinter(indent=4)
+                contents = pp.pformat(self.state)
+                newline = "\n" if "\n" in contents else ""
+                cls_str += " : %s%s" % (newline, contents)
 
             return cls_str
+
+        def __setstate__(self, state):
+            StubObject.__init__(self)
+            self.state = state
 
     # rename stub class
     StubObject.__name__ = class_name
@@ -40,6 +55,15 @@ def make_stub(module_name, class_name):
 
 
 def safe_load(fileobject):
+    """
+    Unpickles an object, stubbing objects not in the python path.
+
+    :param file fileobject:
+        An open file to load.
+
+    :returns:
+        The unpickled object in the file.
+    """
 
     def _find_global(module_name, class_name):
 
@@ -57,6 +81,7 @@ def safe_load(fileobject):
 
 
 def main(args):
+    
     pp = pprint.PrettyPrinter(indent=4)
     for fn in args.files:
         with open(fn) as f:
