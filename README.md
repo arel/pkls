@@ -13,7 +13,6 @@ $ pkls example.pickle
 which pretty-prints the contents of `example.pickle`. For example,
 ``` bash
 $ pkls example.pickle
-stubbing missing_module.ArelClass
 example.pickle
 [   1,
     2,
